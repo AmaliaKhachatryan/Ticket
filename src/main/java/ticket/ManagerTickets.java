@@ -16,8 +16,9 @@ public class ManagerTickets extends MinimumTravelTime {
                 repo.addTicket(ticket);
             }
             newTickets = repo.findAll();
-            Arrays.sort(newTickets);
+
         }
+        Arrays.sort(newTickets);
         return newTickets;
     }
 
