@@ -12,12 +12,12 @@ class ManagerTicketsTest {
     Ticket ticket4 = new Ticket(4, 10000, "MOW", "OVB", 240);
     Ticket ticket5 = new Ticket(5, 6000, "MOW", "LED", 100);
     Ticket ticket6 = new Ticket(6, 50000, "DEM", "LON", 400);
-    Ticket ticket7 = new Ticket(7, 5000, "MOW", "LED", 120);
+    Ticket ticket7 = new Ticket(7, 5000, "MOW", "LED", 80);
     RepositoryTickets repository = new RepositoryTickets();
     ManagerTickets manager = new ManagerTickets(repository);
-
+    MinimumTravelTime travelTime = new MinimumTravelTime();
     @BeforeEach
-    public void globalSetUp() {
+    public void setUp() {
         repository.addTicket(ticket1);
         repository.addTicket(ticket2);
         repository.addTicket(ticket3);
@@ -28,18 +28,26 @@ class ManagerTicketsTest {
     }
 
     @Test
-    public void findAllByFromAndToTest() {
+    public void findAllManagerTest() {
         Ticket[] expected = {ticket1, ticket7, ticket3, ticket5};
         Assertions.assertArrayEquals(expected, manager.findAll("MOW", "LED"));
     }
 
     @Test
-    public void findAllByNotValidTicketTest()  {
+    public void findAllMinimalTimeTravelTest() {
+        Ticket[] expected = {ticket7, ticket1, ticket3, ticket5};
+        Assertions.assertArrayEquals(expected,
+                manager.findAllTicketsMinimalTimeTravel("MOW", "LED", travelTime));
+    }
+
+    @Test
+    public void findAllByNotValidTicketTest() {
         Ticket[] expected = {};
         Assertions.assertArrayEquals(expected, manager.findAll("OOO", "WWW"));
     }
+
     @Test
-    public void findTicketByNotValidTo ()  {
+    public void findTicketByNotValidTo() {
         Ticket[] expected = {};
         Assertions.assertArrayEquals(expected, manager.findAll("MOW", "WWW"));
     }

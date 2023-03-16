@@ -1,16 +1,14 @@
 package ticket;
 
 import java.util.Arrays;
-
-public class ManagerTickets {
+public class ManagerTickets extends MinimumTravelTime {
     private RepositoryTickets repository;
-    private Ticket[] tickets;
 
     public ManagerTickets(RepositoryTickets repository) {
         this.repository = repository;
     }
 
-     public Ticket[] findAll(String from, String to) {
+    public Ticket[] findAll(String from, String to) {
         Ticket[] newTickets = new Ticket[0];
         RepositoryTickets repo = new RepositoryTickets();
         for (Ticket ticket : repository.findAll()) {
@@ -20,6 +18,12 @@ public class ManagerTickets {
             newTickets = repo.findAll();
             Arrays.sort(newTickets);
         }
+        return newTickets;
+    }
+
+    public Ticket[] findAllTicketsMinimalTimeTravel(String from, String to, MinimumTravelTime travelTime) {
+        Ticket[] newTickets = findAll(from, to);
+        Arrays.sort(newTickets, travelTime);
         return newTickets;
     }
 }
